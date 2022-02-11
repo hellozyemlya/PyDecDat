@@ -7,9 +7,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, qApp, QFileDialo
     QSplitter, QComboBox, QLineEdit, QTabWidget, QTextEdit, QAbstractItemView, QHeaderView, QFrame, \
     QStyleFactory, QInputDialog, QMessageBox
 
-import decompiler
-from dat import Dat
-from decompiler import get_code
+from pydecdat.dat import Dat
+from pydecdat.decompiler import get_code
 
 
 class TableWidgetItemWithNumber(QTableWidgetItem):
@@ -25,8 +24,9 @@ ROWS = [
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, app, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.app = app
         self.symbolsTable = None
         self.symbolDetails = None
         self.sourceCode = None
@@ -46,7 +46,8 @@ class MainWindow(QMainWindow):
         actionOpen = QAction('&Open', self)
         actionOpen.setShortcut('Ctrl+O')
         actionOpen.setStatusTip('Open .dat file')
-        actionOpen.triggered.connect(self.selectDat)  # FIXME when only 1 result after searching, then it doesnt work, e.g.: b_validateother
+        actionOpen.triggered.connect(
+            self.selectDat)  # FIXME when only 1 result after searching, then it doesnt work, e.g.: b_validateother
 
         actionExit = QAction('&Exit', self)
         actionExit.setShortcut('Ctrl+Q')
@@ -101,13 +102,13 @@ class MainWindow(QMainWindow):
         menuHelp.addAction(actionExportDefinition)
 
         splitter = QSplitter(Qt.Horizontal)
-        splitter.setStyleSheet('QSplitter::handle {background: url("splitter.png"); height: 8px; width:8px;}')
+        # TODO images must be packed to resources
+        # splitter.setStyleSheet('QSplitter::handle {background: url("splitter.png"); height: 8px; width:8px;}')
         layout.addWidget(splitter)
 
         leftside = QWidget()
         leftsidelayout = QVBoxLayout()
         leftside.setLayout(leftsidelayout)
-
 
         rightsplitter = QSplitter(Qt.Vertical)
         splitter.addWidget(leftside)
@@ -220,7 +221,7 @@ class MainWindow(QMainWindow):
         font = QFont()
         font.setPointSize(10)
         font.setBold(True)
-        font.setFamily(app.font().family())
+        font.setFamily(self.app.font().family())
         symbolsTable.horizontalHeader().setFont(font)
         symbolsTable.verticalHeader().setDefaultSectionSize(16)
 
@@ -328,7 +329,7 @@ class MainWindow(QMainWindow):
     def onSelectSymbol(self):
         item_id, item_symbolname, item_type, item_sort_id = self.symbolsTable.selectedItems()
         symbol_id = int(item_id.text())
-        symbol = mainWindow.dat.symbols[symbol_id]
+        symbol = self.dat.symbols[symbol_id]
 
         print(symbol_id, item_symbolname.text(), item_type.text())
         # code = self.decompiler.get_code(symbol)
@@ -356,7 +357,6 @@ class MainWindow(QMainWindow):
             self.symbolDetails.setItem(i, 1, QTableWidgetItem(display_data))
 
 
-
 def my_exception_hook(exctype, value, traceback):
     # Print the error and traceback
     print(exctype, value, traceback)
@@ -365,7 +365,7 @@ def my_exception_hook(exctype, value, traceback):
     sys.exit(1)
 
 
-if __name__ == '__main__':
+def main():
     # Back up the reference to the exceptionhook
     sys._excepthook = sys.excepthook
 
@@ -379,6 +379,9 @@ if __name__ == '__main__':
 
     app.setStyle(QStyleFactory.create('GTK+'))  # GTK+/Windows/Fusion
     print(app.font().family(), app.font().defaultFamily())
-    mainWindow = MainWindow()
-    decompiler.mainWindow = mainWindow
+    mainWindow = MainWindow(app=app)
     sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    main()
