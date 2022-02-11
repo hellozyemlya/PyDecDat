@@ -1,8 +1,8 @@
 import struct
 
-from constants import BYTE_FORMAT, INT_FORMAT
-from dat_symbol import DatSymbol
-from filewrapper import FileWrapper
+from pydecdat.constants import BYTE_FORMAT, INT_FORMAT
+from pydecdat.dat_symbol import DatSymbol
+from pydecdat.filewrapper import FileWrapper
 
 
 class Dat:

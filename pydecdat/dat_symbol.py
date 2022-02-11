@@ -1,4 +1,4 @@
-from constants import Flag, Type, TYPE_2_STR, FLAGS, FLAG_2_STR, EXTERNALS_TO_FIX
+from pydecdat.constants import Flag, Type, TYPE_2_STR, FLAGS, FLAG_2_STR, EXTERNALS_TO_FIX
 
 
 class DatSymbol:

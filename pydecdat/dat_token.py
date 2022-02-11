@@ -1,4 +1,4 @@
-from tokenenum import TokenEnum
+from pydecdat.tokenenum import TokenEnum
 
 SYMBOL = 1
 INT = 2

@@ -1,6 +1,6 @@
 import struct
 
-from constants import Type, INT_FORMAT, BYTE_FORMAT, FLOAT_FORMAT, BYTES_FORMAT, CHAR_FORMAT
+from pydecdat.constants import Type, INT_FORMAT, BYTE_FORMAT, FLOAT_FORMAT, BYTES_FORMAT, CHAR_FORMAT
 
 
 class FileWrapper:

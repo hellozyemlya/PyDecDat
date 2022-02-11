@@ -9,9 +9,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QAction, qApp, QFileDialo
 
 import decompiler
 from dat import Dat
-from decompiler import get_code, get_tokens
-from dat_token import Token
-
+from decompiler import get_code
 
 
 class TableWidgetItemWithNumber(QTableWidgetItem):

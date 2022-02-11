@@ -1,8 +1,8 @@
 import struct
 
-from constants import Type, Flag, TYPE_2_STR, INT_FORMAT, FLOAT_FORMAT
-from dat_token import Token
-from tokenenum import TokenEnum
+from pydecdat.constants import Type, Flag, TYPE_2_STR, INT_FORMAT, FLOAT_FORMAT
+from pydecdat.dat_token import Token
+from pydecdat.tokenenum import TokenEnum
 
 
 class Line:
