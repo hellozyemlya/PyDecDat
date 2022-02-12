@@ -4,10 +4,9 @@ from pydecdat.constants import Type, INT_FORMAT, BYTE_FORMAT, FLOAT_FORMAT, BYTE
 
 
 class FileWrapper:
-    def __init__(self, file, encoding):
-        self.file = file
+    def __init__(self, content, encoding):
         self.offset = 0
-        self.content = file.read()
+        self.content = content
         self.encoding = encoding
 
     def __repr__(self):
